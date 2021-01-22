@@ -1,0 +1,36 @@
+schema {
+    query: Query
+}
+
+type Author {
+    id: String
+    name: String!
+    books: [Book]
+}
+type Book {
+    title: String!
+    isbn: String!
+    authors: [Author]
+}
+
+# create separate objects specifically for input types (especially for mutations)
+# best practice https://graphql.org/graphql-js/mutations-and-input-types/
+input BookInput {
+    title: String!
+    isbn: String!
+}
+
+input AuthorInput {
+    name: String!
+}
+
+type Query {
+    getBook(isbn: String!): Book
+}
+
+type Mutation {
+    createBook(book: BookInput): Book
+    createAuthor(author: AuthorInput): Author
+    addAuthor(authorId: String, isbn: String): Book
+}
+
